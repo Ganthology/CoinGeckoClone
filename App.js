@@ -1,22 +1,12 @@
 import React from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import RootStackNavigator from './navigation/RootStackNavigator';
+import {NavigationContainer} from '@react-navigation/native';
 
 const App = () => {
-  const isDarkMode = useColorScheme() === 'dark';
-
   return (
-    <SafeAreaView>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <Text>CoinGecko Clone</Text>
-    </SafeAreaView>
+    <NavigationContainer>
+      <RootStackNavigator />
+    </NavigationContainer>
   );
 };
 
