@@ -1,3 +1,4 @@
 import Navbar from './Navbar';
+import MarketTabBar from './MarketTabBar';
 
-export {Navbar};
+export {Navbar, MarketTabBar};
