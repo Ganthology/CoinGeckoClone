@@ -8,28 +8,21 @@ import {
   ScrollView,
 } from 'react-native';
 import {CustomStatusBar} from '../components';
-import {
-  SearchButtonDark,
-  SearchButtonLight,
-  CoinGeckoLogoDark,
-  CoinGeckoLogoLight,
-  BellButtonDark,
-  BellButtonLight,
-  Candy,
-} from '../assets/images';
+import {Navbar} from '../components/market';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
+import {WIDTH, HEIGHT, DARKGREEN, LIGHTGREEN} from '../utils';
 
 const renderTabBar = props => (
   <TabBar
     {...props}
-    indicatorStyle={{backgroundColor: '#aacc00'}}
+    indicatorStyle={{backgroundColor: LIGHTGREEN}}
     style={{
       backgroundColor: '#0b2c24',
       borderBottomWidth: 1.5,
       borderBottomColor: 'grey',
     }}
     renderLabel={({route, focused, color}) => (
-      <Text style={{color: focused ? '#aacc00' : color}}>{route.title}</Text>
+      <Text style={{color: focused ? LIGHTGREEN : color}}>{route.title}</Text>
     )}
     scrollEnabled
   />
@@ -46,25 +39,25 @@ const MarketScreen = () => {
   ]);
 
   const CryptoRoute = () => (
-    <View style={{flex: 1, backgroundColor: '#ff4081'}}>
+    <View style={{flex: 1, backgroundColor: DARKGREEN}}>
       <Text>Cryptocurrency</Text>
     </View>
   );
 
   const CategoryRoute = () => (
-    <View style={{flex: 1, backgroundColor: '#aacc00'}}>
+    <View style={{flex: 1, backgroundColor: LIGHTGREEN}}>
       <Text>Categories</Text>
     </View>
   );
 
   const ExchangeRoute = () => (
-    <View style={{flex: 1, backgroundColor: '#ff4081'}}>
+    <View style={{flex: 1, backgroundColor: DARKGREEN}}>
       <Text>Exchanges</Text>
     </View>
   );
 
   const DerivativeRoute = () => (
-    <View style={{flex: 1, backgroundColor: '#aacc00'}}>
+    <View style={{flex: 1, backgroundColor: LIGHTGREEN}}>
       <Text>Derivatives</Text>
     </View>
   );
@@ -77,25 +70,14 @@ const MarketScreen = () => {
   });
 
   return (
-    <View style={{height: height}}>
-      <CustomStatusBar backgroundColor={'#0b2c24'} barStyle={'light-content'} />
-      <View style={styles.navbarContainer}>
-        <View style={styles.leftNavInner}>
-          <Image style={styles.icon} source={BellButtonDark} />
-        </View>
-        <View style={styles.centerNavInner}>
-          <CoinGeckoLogoDark width={120} height={50} />
-        </View>
-        <View style={styles.rightNavInner}>
-          <Candy width={30} height={30} />
-          <Image style={styles.icon} source={SearchButtonDark} />
-        </View>
-      </View>
+    <View style={{height: HEIGHT}}>
+      <CustomStatusBar backgroundColor={DARKGREEN} barStyle={'light-content'} />
+      <Navbar />
       <TabView
         navigationState={{index, routes}}
         renderScene={renderScene}
         onIndexChange={setIndex}
-        initialLayout={{width: width}}
+        initialLayout={{width: WIDTH}}
         renderTabBar={renderTabBar}
       />
     </View>
@@ -103,32 +85,3 @@ const MarketScreen = () => {
 };
 
 export default MarketScreen;
-
-const {width, height} = Dimensions.get('window');
-
-const styles = StyleSheet.create({
-  navbarContainer: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    backgroundColor: '#0b2c24',
-    width: width,
-  },
-  leftNavInner: {
-    width: width * 0.3,
-    paddingLeft: width * 0.04,
-  },
-  centerNavInner: {
-    width: width * 0.4,
-    alignItems: 'center',
-  },
-  rightNavInner: {
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-    width: width * 0.3,
-  },
-  icon: {
-    width: 25,
-    height: 25,
-  },
-});
