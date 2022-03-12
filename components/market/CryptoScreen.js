@@ -1,10 +1,20 @@
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, FlatList} from 'react-native';
 import {HEIGHT, WIDTH, LIGHTGREEN} from '../../utils';
 import {GreenIndicator, RedIndicator} from '../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
+import InfoCard from './InfoCard';
 
 const CryptoScreen = () => {
+  const PLACEHOLDER_DATA = [
+    {
+      title: 'GLOBAL MARKET CAP',
+      data: '1,123,445,425,071',
+      percentChange: -0.8,
+    },
+    {title: '24H VOLUME', data: '63,300,448,366', percentChange: null},
+  ];
+
   return (
     <LinearGradient
       colors={['#1b1f22', '#004b23']}
@@ -12,87 +22,24 @@ const CryptoScreen = () => {
         alignItems: 'center',
         height: HEIGHT,
       }}>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          width: WIDTH * 0.6,
-          height: WIDTH * 0.15,
-          marginTop: 10,
-        }}>
-        <LinearGradient
-          colors={['#18f26c', '#18ceaf']}
-          style={{
-            width: 10,
-            borderTopLeftRadius: 15,
-            borderBottomLeftRadius: 15,
-            marginRight: -10,
-          }}
+      <FlatList
+        data={PLACEHOLDER_DATA}
+        renderItem={({item}) => (
+          <InfoCard
+            title={item.title}
+            data={item.data}
+            percentChange={item.percentChange}
+          />
+        )}
+        horizontal
+      />
+      <View style={{flexDirection: 'row'}}>
+        <InfoCard
+          title={'GLOBAL MARKET CAP'}
+          data={'1,123,445,425,071'}
+          percentChange={-0.8}
         />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            backgroundColor: 'rgba(24, 242, 108, 0.1)',
-            width: WIDTH * 0.6 - 10,
-            borderRadius: 10,
-            paddingLeft: 25,
-          }}>
-          <Text style={{color: '#959ea0', fontSize: 12}}>
-            GLOBAL MARKET CAP
-          </Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingTop: 5,
-            }}>
-            <Text style={{color: 'white', fontSize: 14}}>
-              $1,123,445,425,071{' '}
-            </Text>
-            <Image source={GreenIndicator} style={{height: 7, width: 7}} />
-            <Text style={{color: LIGHTGREEN, fontSize: 14}}> 0.8%</Text>
-          </View>
-        </View>
-      </View>
-      <View
-        style={{
-          flexDirection: 'row',
-          justifyContent: 'flex-start',
-          width: WIDTH * 0.6,
-          height: WIDTH * 0.15,
-          marginTop: 10,
-        }}>
-        <LinearGradient
-          colors={['#18f26c', '#18ceaf']}
-          style={{
-            width: 10,
-            borderTopLeftRadius: 15,
-            borderBottomLeftRadius: 15,
-            marginRight: -10,
-          }}
-        />
-        <View
-          style={{
-            justifyContent: 'center',
-            alignItems: 'flex-start',
-            backgroundColor: 'rgba(24, 242, 108, 0.1)',
-            width: WIDTH * 0.6 - 10,
-            borderRadius: 10,
-            paddingLeft: 25,
-          }}>
-          <Text style={{color: '#959ea0', fontSize: 12}}>24H VOLUME</Text>
-          <View
-            style={{
-              flexDirection: 'row',
-              alignItems: 'center',
-              paddingTop: 5,
-            }}>
-            <Text style={{color: 'white', fontSize: 14}}>
-              $1,123,445,425,071{' '}
-            </Text>
-          </View>
-        </View>
+        <InfoCard title={'24H VOLUME'} data={'63,300,448,366'} />
       </View>
       <Text>Cryptocurrency</Text>
     </LinearGradient>
