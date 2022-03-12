@@ -64,6 +64,7 @@ const MarketTabBar = () => {
       onIndexChange={setIndex}
       initialLayout={{width: WIDTH}}
       renderTabBar={renderTabBar}
+      swipeEnabled={false}
     />
   );
 };
