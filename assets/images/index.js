@@ -6,6 +6,8 @@ import BellButtonDark from './bell-button-dark.png';
 import BellButtonLight from './bell-button-light.png';
 import SearchButtonDark from './search-button-dark.png';
 import SearchButtonLight from './search-button-light.png';
+import GreenIndicator from './indicator-green.png';
+import RedIndicator from './indicator-red.png';
 import Candy from './candy.svg';
 
 export {
@@ -17,5 +19,7 @@ export {
   BellButtonLight,
   SearchButtonDark,
   SearchButtonLight,
+  GreenIndicator,
+  RedIndicator,
   Candy,
 };
