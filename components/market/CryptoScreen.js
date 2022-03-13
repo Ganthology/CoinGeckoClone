@@ -4,6 +4,7 @@ import {HEIGHT, WIDTH, LIGHTGREEN} from '../../utils';
 import {GreenIndicator, RedIndicator} from '../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
 import InfoCard from './InfoCard';
+import SortingPill from './SortingPill';
 
 const CryptoScreen = () => {
   const PLACEHOLDER_DATA = [
@@ -13,6 +14,13 @@ const CryptoScreen = () => {
       percentChange: -0.8,
     },
     {title: '24H VOLUME', data: '63,300,448,366', percentChange: null},
+  ];
+
+  const SORTING_DATA = [
+    {title: 'USD / BTC'},
+    {title: 'All Coins'},
+    {title: '24H'},
+    {title: 'Sort By Market Cap'},
   ];
 
   return (
@@ -31,7 +39,22 @@ const CryptoScreen = () => {
         style={styles.infoCardContainer}
         horizontal
       />
-      <Text>Cryptocurrency</Text>
+      <FlatList
+        data={SORTING_DATA}
+        renderItem={({item}) => <SortingPill title={item.title} />}
+        style={styles.sortingPillsContainer}
+        horizontal
+      />
+      {/* <View style={{flexDirection: 'row'}}>
+        <SortingPill title={'USD / BTC'} />
+        <SortingPill title={'All Coins'} />
+        <SortingPill title={'24H'} />
+        <SortingPill title={'Sort By Market Cap'} />
+      </View> */}
+      {/* <View style={{height: HEIGHT * 0.85}}>
+        <Text style={{color: 'white'}}>FlatList</Text>
+      </View> */}
+      <Text style={{color: 'white'}}>Test</Text>
     </LinearGradient>
   );
 };
@@ -42,6 +65,15 @@ const styles = StyleSheet.create({
   backgroundContainer: {
     alignItems: 'center',
     height: HEIGHT,
+    justifyContent: 'flex-start',
   },
-  infoCardContainer: {paddingLeft: WIDTH * 0.05},
+  infoCardContainer: {
+    paddingLeft: WIDTH * 0.05,
+    height: WIDTH * 0.225,
+    flexGrow: 0,
+  },
+  sortingPillsContainer: {
+    paddingLeft: WIDTH * 0.05,
+    flexGrow: 0,
+  },
 });
