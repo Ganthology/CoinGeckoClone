@@ -43,6 +43,7 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.6,
     height: WIDTH * 0.15,
     marginTop: 10,
+    marginRight: WIDTH * 0.05 - 10,
   },
   neonBar: {
     width: 10,
