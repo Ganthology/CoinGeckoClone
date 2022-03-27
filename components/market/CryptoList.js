@@ -33,7 +33,11 @@ const CryptoList = () => {
   const [list, setList] = useState([]);
 
   const [page, setPage] = useState(1);
-  // let page = 1;
+
+  const [globalData, setGlobalData] = useState([
+    {title: 'Global Market Cap', data: '-'},
+    {title: '24H Volume', data: '-'},
+  ]);
 
   const PLACEHOLDER_DATA = [
     {
@@ -65,8 +69,27 @@ const CryptoList = () => {
       },
     })
       .then(function (response) {
-        // console.log(response.data);
         setList(response.data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+
+    axios({
+      method: 'get',
+      url: 'https://api.coingecko.com/api/v3/global',
+    })
+      .then(function (response) {
+        console.log(response.data.data.total_market_cap.usd);
+        setGlobalData([
+          {
+            title: 'Global Market Cap',
+            data: response.data.data.total_market_cap.usd,
+            percentChange:
+              response.data.data.market_cap_change_percentage_24h_usd,
+          },
+          {title: '24H Volume', data: response.data.data.total_volume.usd},
+        ]);
       })
       .catch(function (error) {
         console.log(error);
@@ -80,7 +103,7 @@ const CryptoList = () => {
         ListHeaderComponent={
           <>
             <FlatList
-              data={PLACEHOLDER_DATA}
+              data={globalData}
               renderItem={({item}) => (
                 <InfoCard
                   title={item.title}
@@ -135,7 +158,6 @@ const CryptoList = () => {
               },
             })
               .then(function (response) {
-                // console.log(response.data);
                 setList(currentList => {
                   return currentList.concat(response.data);
                 });

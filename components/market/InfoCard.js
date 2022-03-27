@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {View, Text, Image, StyleSheet} from 'react-native';
 import {WIDTH, LIGHTGREEN, LIGHTRED} from '../../utils';
 import {GreenIndicator, RedIndicator} from '../../assets/images';
@@ -6,14 +6,28 @@ import LinearGradient from 'react-native-linear-gradient';
 import PercentIndicator from './PercentIndicator';
 
 const InfoCard = ({title, data, percentChange}) => {
+  const [infoTitle, setTitle] = useState(title);
+  const [infoData, setData] = useState(data);
+  const [infoPercent, setPercent] = useState(percentChange);
+
+  useEffect(() => {
+    setTitle(title);
+    setData(data);
+    setPercent(percentChange);
+  }, [title, data, percentChange]);
+
   return (
     <View style={styles.container}>
       <LinearGradient colors={['#18f26c', '#18ceaf']} style={styles.neonBar} />
       <View style={styles.infoContainer}>
-        <Text style={styles.title}>{title}</Text>
+        <Text style={styles.title}>{infoTitle}</Text>
         <View style={styles.dataContainer}>
-          <Text style={styles.data}>{`$${data}`} </Text>
-          {percentChange && <PercentIndicator percentChange={percentChange} />}
+          <Text style={styles.data}>
+            {`$${Number(infoData.toFixed(0)).toLocaleString('en-US')}`}{' '}
+          </Text>
+          {percentChange && (
+            <PercentIndicator percentChange={infoPercent.toFixed(1)} />
+          )}
         </View>
       </View>
     </View>
