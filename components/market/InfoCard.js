@@ -25,7 +25,7 @@ const InfoCard = ({title, data, percentChange}) => {
           <Text style={styles.data}>
             {`$${Number(infoData.toFixed(0)).toLocaleString('en-US')}`}{' '}
           </Text>
-          {percentChange && (
+          {infoPercent && (
             <PercentIndicator percentChange={infoPercent.toFixed(1)} />
           )}
         </View>
