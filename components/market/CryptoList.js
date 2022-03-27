@@ -4,6 +4,7 @@ import {HEIGHT, WIDTH} from '../../utils';
 import axios from 'axios';
 import InfoCard from './InfoCard';
 import SortingPill from './SortingPill';
+import PercentIndicator from './PercentIndicator';
 
 const CryptoItem = ({rank, coin, price, changes, marketCap}) => {
   return (
@@ -16,9 +17,9 @@ const CryptoItem = ({rank, coin, price, changes, marketCap}) => {
         style={[styles.cryptoRow, styles.priceCol]}>{`$${price.toLocaleString(
         'en-US',
       )}`}</Text>
-      <Text style={[styles.cryptoRow, styles.percentageChangeCol]}>
-        {changes.toFixed(1)}
-      </Text>
+      <View style={[styles.cryptoRow, styles.percentageChangeCol]}>
+        <PercentIndicator percentChange={changes.toFixed(1)} />
+      </View>
       <Text
         style={[
           styles.cryptoRow,
@@ -170,11 +171,12 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   percentageChangeCol: {
-    width: WIDTH * 0.1,
+    width: WIDTH * 0.125,
     textAlign: 'right',
+    alignItems: 'flex-end',
   },
   marketCapCol: {
-    width: WIDTH * 0.35,
+    width: WIDTH * 0.325,
     textAlign: 'right',
   },
   infoCardContainer: {
