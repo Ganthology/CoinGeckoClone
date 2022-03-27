@@ -1,5 +1,5 @@
-import React, {useState, useEffect} from 'react';
-import {FlatList, Text, View, StyleSheet} from 'react-native';
+import React, {useState, useEffect, useCallback} from 'react';
+import {RefreshControl, FlatList, Text, View, StyleSheet} from 'react-native';
 import {HEIGHT, WIDTH} from '../../utils';
 import axios from 'axios';
 import InfoCard from './InfoCard';
@@ -34,19 +34,12 @@ const CryptoList = () => {
 
   const [page, setPage] = useState(1);
 
-  const [globalData, setGlobalData] = useState([
-    {title: 'Global Market Cap', data: '-'},
-    {title: '24H Volume', data: '-'},
-  ]);
+  const [refreshing, setRefreshing] = useState(false);
 
-  const PLACEHOLDER_DATA = [
-    {
-      title: 'GLOBAL MARKET CAP',
-      data: '1,123,445,425,071',
-      percentChange: -0.8,
-    },
-    {title: '24H VOLUME', data: '63,300,448,366', percentChange: null},
-  ];
+  const [globalData, setGlobalData] = useState([
+    {title: 'Global Market Cap', data: 0},
+    {title: '24H Volume', data: 0},
+  ]);
 
   const SORTING_DATA = [
     {title: 'USD / BTC'},
@@ -54,6 +47,30 @@ const CryptoList = () => {
     {title: '24H'},
     {title: 'Sort By Market Cap'},
   ];
+
+  const onRefresh = useCallback(async () => {
+    setRefreshing(true);
+    axios({
+      method: 'get',
+      url: 'https://api.coingecko.com/api/v3/coins/markets',
+      params: {
+        vs_currency: 'usd',
+        order: 'market_cap_desc',
+        per_page: 50,
+        page: 1,
+        sparkline: false,
+        price_change_percentage: '7d',
+      },
+    })
+      .then(function (response) {
+        setList(response.data);
+        setTimeout(() => setRefreshing(false), 1000);
+      })
+      .catch(function (error) {
+        setTimeout(() => setRefreshing(false), 1000);
+        console.log(error);
+      });
+  }, [refreshing]);
 
   useEffect(() => {
     axios({
@@ -80,7 +97,6 @@ const CryptoList = () => {
       url: 'https://api.coingecko.com/api/v3/global',
     })
       .then(function (response) {
-        console.log(response.data.data.total_market_cap.usd);
         setGlobalData([
           {
             title: 'Global Market Cap',
@@ -169,6 +185,14 @@ const CryptoList = () => {
             return currentPage + 1;
           });
         }}
+        refreshControl={
+          <RefreshControl
+            refreshing={refreshing}
+            onRefresh={onRefresh}
+            tintColor="white"
+            colors="white"
+          />
+        }
         style={styles.flatlistContainer}
         contentContainerStyle={styles.alignItemsCenter}
         keyExtractor={item => item.id}
