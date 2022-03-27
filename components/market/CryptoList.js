@@ -32,6 +32,9 @@ const CryptoItem = ({rank, coin, price, changes, marketCap}) => {
 const CryptoList = () => {
   const [list, setList] = useState([]);
 
+  const [page, setPage] = useState(1);
+  // let page = 1;
+
   const PLACEHOLDER_DATA = [
     {
       title: 'GLOBAL MARKET CAP',
@@ -55,7 +58,7 @@ const CryptoList = () => {
       params: {
         vs_currency: 'usd',
         order: 'market_cap_desc',
-        per_page: 100,
+        per_page: 50,
         page: 1,
         sparkline: false,
         price_change_percentage: '7d',
@@ -117,8 +120,36 @@ const CryptoList = () => {
             rank={item.market_cap_rank}
           />
         )}
+        onEndReached={() => {
+          setPage(currentPage => {
+            axios({
+              method: 'get',
+              url: 'https://api.coingecko.com/api/v3/coins/markets',
+              params: {
+                vs_currency: 'usd',
+                order: 'market_cap_desc',
+                per_page: 50,
+                page: currentPage + 1,
+                sparkline: false,
+                price_change_percentage: '7d',
+              },
+            })
+              .then(function (response) {
+                // console.log(response.data);
+                setList(currentList => {
+                  return currentList.concat(response.data);
+                });
+              })
+              .catch(function (error) {
+                console.log(error);
+              });
+
+            return currentPage + 1;
+          });
+        }}
         style={styles.flatlistContainer}
         contentContainerStyle={styles.alignItemsCenter}
+        keyExtractor={item => item.id}
       />
     </View>
   );
@@ -160,7 +191,7 @@ const styles = StyleSheet.create({
     fontSize: 13,
   },
   rankCol: {
-    width: WIDTH * 0.05,
+    width: WIDTH * 0.075,
   },
   coinCol: {
     width: WIDTH * 0.125,
@@ -171,7 +202,7 @@ const styles = StyleSheet.create({
     textAlign: 'right',
   },
   percentageChangeCol: {
-    width: WIDTH * 0.125,
+    width: WIDTH * 0.175,
     textAlign: 'right',
     alignItems: 'flex-end',
   },
