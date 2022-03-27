@@ -3,6 +3,7 @@ import {View, Text, Image, StyleSheet} from 'react-native';
 import {WIDTH, LIGHTGREEN, LIGHTRED} from '../../utils';
 import {GreenIndicator, RedIndicator} from '../../assets/images';
 import LinearGradient from 'react-native-linear-gradient';
+import PercentIndicator from './PercentIndicator';
 
 const InfoCard = ({title, data, percentChange}) => {
   return (
@@ -12,22 +13,7 @@ const InfoCard = ({title, data, percentChange}) => {
         <Text style={styles.title}>{title}</Text>
         <View style={styles.dataContainer}>
           <Text style={styles.data}>{`$${data}`} </Text>
-          {percentChange && (
-            <>
-              <Image
-                source={percentChange >= 0 ? GreenIndicator : RedIndicator}
-                style={styles.indicatorImage}
-              />
-              <Text
-                style={
-                  percentChange >= 0
-                    ? styles.positivePercent
-                    : styles.negativePercent
-                }>
-                {` ${percentChange}%`}
-              </Text>
-            </>
-          )}
+          {percentChange && <PercentIndicator percentChange={percentChange} />}
         </View>
       </View>
     </View>
