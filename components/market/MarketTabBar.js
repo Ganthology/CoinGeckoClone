@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {View, Text, StyleSheet} from 'react-native';
 import {TabView, TabBar, SceneMap} from 'react-native-tab-view';
 import CryptoScreen from './CryptoScreen';
+import CategoryScreen from './CategoryScreen';
 import {WIDTH, LIGHTGREEN, DARKGREEN} from '../../utils';
 
 const renderTabBar = props => (
@@ -52,7 +53,7 @@ const MarketTabBar = () => {
 
   const renderScene = SceneMap({
     crypto: CryptoScreen,
-    category: CategoryRoute,
+    category: CategoryScreen,
     exchange: ExchangeRoute,
     derivative: DerivativeRoute,
   });
