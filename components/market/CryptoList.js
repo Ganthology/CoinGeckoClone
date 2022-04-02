@@ -1,18 +1,26 @@
 import React, {useState, useEffect, useCallback} from 'react';
-import {RefreshControl, FlatList, Text, View, StyleSheet} from 'react-native';
+import {
+  RefreshControl,
+  FlatList,
+  Text,
+  View,
+  StyleSheet,
+  Image,
+} from 'react-native';
 import {HEIGHT, WIDTH} from '../../utils';
 import axios from 'axios';
 import InfoCard from './InfoCard';
 import SortingPill from './SortingPill';
 import PercentIndicator from './PercentIndicator';
 
-const CryptoItem = ({rank, coin, price, changes, marketCap}) => {
+const CryptoItem = ({rank, coin, price, changes, marketCap, imageUrl}) => {
   return (
     <View style={styles.cryptoRowContainer}>
       <Text style={[styles.cryptoRow, styles.rankCol]}>{rank}</Text>
-      <Text style={[styles.cryptoRow, styles.coinCol]}>
-        {coin.toUpperCase()}
-      </Text>
+      <View style={styles.coinCol}>
+        <Image source={{uri: imageUrl}} style={styles.coinImage} />
+        <Text style={styles.cryptoRow}>{coin.toUpperCase()}</Text>
+      </View>
       <Text style={[styles.cryptoRow, styles.priceCol]}>{`$${price
         .toFixed(2)
         .toLocaleString('en-US')}`}</Text>
@@ -156,6 +164,7 @@ const CryptoList = () => {
             changes={item.price_change_percentage_7d_in_currency}
             marketCap={item.market_cap}
             rank={item.market_cap_rank}
+            imageUrl={item.image}
           />
         )}
         onEndReached={() => {
@@ -241,6 +250,7 @@ const styles = StyleSheet.create({
   coinCol: {
     width: WIDTH * 0.125,
     textAlign: 'center',
+    alignItems: 'center',
   },
   priceCol: {
     width: WIDTH * 0.175,
@@ -255,6 +265,7 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.325,
     textAlign: 'right',
   },
+  coinImage: {height: 15, width: 15, marginBottom: 2},
   infoCardContainer: {
     paddingLeft: WIDTH * 0.05,
     height: WIDTH * 0.225,
