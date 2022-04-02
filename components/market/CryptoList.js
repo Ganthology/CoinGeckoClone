@@ -13,10 +13,9 @@ const CryptoItem = ({rank, coin, price, changes, marketCap}) => {
       <Text style={[styles.cryptoRow, styles.coinCol]}>
         {coin.toUpperCase()}
       </Text>
-      <Text
-        style={[styles.cryptoRow, styles.priceCol]}>{`$${price.toLocaleString(
-        'en-US',
-      )}`}</Text>
+      <Text style={[styles.cryptoRow, styles.priceCol]}>{`$${price
+        .toFixed(2)
+        .toLocaleString('en-US')}`}</Text>
       <View style={[styles.cryptoRow, styles.percentageChangeCol]}>
         <PercentIndicator percentChange={changes.toFixed(1)} />
       </View>
@@ -70,7 +69,7 @@ const CryptoList = () => {
         setTimeout(() => setRefreshing(false), 1000);
         console.log(error);
       });
-  }, [refreshing]);
+  }, []);
 
   useEffect(() => {
     axios({
