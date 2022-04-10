@@ -9,40 +9,17 @@ const CategoryItem = ({topCoins, title, marketCap, percentChange}) => {
   const formattedMarketCap = Number(marketCap.toFixed(0));
 
   return (
-    <View
-      style={{
-        flexDirection: 'row',
-        width: WIDTH,
-        height: WIDTH * 0.125,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        paddingHorizontal: WIDTH * 0.05,
-        borderBottomWidth: 0.25,
-        borderBottomColor: 'darkgrey',
-      }}>
-      <View
-        style={[
-          {flexDirection: 'row', justifyContent: 'flex-start'},
-          styles.topCoinCol,
-        ]}>
+    <View style={styles.itemContainer}>
+      <View style={[styles.rowContainer, styles.topCoinCol]}>
         {topCoins.map(imageUrl => (
-          <Image
-            source={{uri: imageUrl}}
-            style={{height: 18, width: 18, margin: 1}}
-          />
+          <Image source={{uri: imageUrl}} style={styles.coinImage} />
         ))}
       </View>
-      <Text
-        style={[
-          {color: 'white', fontSize: 13, fontWeight: '600'},
-          styles.categoryCol,
-        ]}>
-        {title}
-      </Text>
+      <Text style={[styles.boldText, styles.categoryCol]}>{title}</Text>
       <View style={[styles.percentageChangeCol]}>
         <PercentIndicator percentChange={percentChange.toFixed(1)} />
       </View>
-      <Text style={[{color: 'white', fontSize: 13}, styles.marketCapCol]}>
+      <Text style={[styles.normalText, styles.marketCapCol]}>
         {`$${formattedMarketCap.toLocaleString('en-US')}`}
       </Text>
     </View>
@@ -139,4 +116,18 @@ const styles = StyleSheet.create({
     width: WIDTH * 0.3,
     textAlign: 'right',
   },
+  itemContainer: {
+    flexDirection: 'row',
+    width: WIDTH,
+    height: WIDTH * 0.125,
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingHorizontal: WIDTH * 0.05,
+    borderBottomWidth: 0.25,
+    borderBottomColor: 'darkgrey',
+  },
+  rowContainer: {flexDirection: 'row', justifyContent: 'flex-start'},
+  coinImage: {height: 18, width: 18, margin: 1},
+  normalText: {color: 'white', fontSize: 13},
+  boldText: {color: 'white', fontSize: 13, fontWeight: '600'},
 });
