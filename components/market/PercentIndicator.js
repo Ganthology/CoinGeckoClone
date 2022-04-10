@@ -16,7 +16,7 @@ const PercentIndicator = ({percentChange}) => {
         style={
           percentChange >= 0 ? styles.positivePercent : styles.negativePercent
         }>
-        {` ${formattedPercentChange}%`}
+        {` ${formattedPercentChange.toFixed(1)}%`}
       </Text>
     </View>
   );
