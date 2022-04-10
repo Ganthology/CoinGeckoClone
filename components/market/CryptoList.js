@@ -161,7 +161,7 @@ const CryptoList = () => {
           <CryptoItem
             coin={item.symbol}
             price={item.current_price}
-            changes={item.price_change_percentage_7d_in_currency}
+            changes={item.price_change_percentage_24h}
             marketCap={item.market_cap}
             rank={item.market_cap_rank}
             imageUrl={item.image}
