@@ -25,7 +25,7 @@ const ExchangeItem = ({rank, title, volume, trust}) => {
 };
 
 const ExchangesScreen = () => {
-  const [categoryList, setCategoryList] = React.useState([]);
+  const [exchangeList, setExchangeList] = React.useState([]);
 
   React.useEffect(() => {
     axios({
@@ -37,7 +37,7 @@ const ExchangesScreen = () => {
       },
     })
       .then(function (response) {
-        setCategoryList(response.data);
+        setExchangeList(response.data);
       })
       .catch(function (error) {
         console.log(error);
@@ -57,13 +57,14 @@ const ExchangesScreen = () => {
         <Text style={[styles.headerRow, styles.trustCol]}>TRUST</Text>
       </View>
       <FlatList
-        data={categoryList}
+        data={exchangeList}
         renderItem={({item}) => (
           <ExchangeItem
             rank={item.trust_score_rank}
             title={item.name}
             volume={item.trade_volume_24h_btc}
             trust={item.trust_score}
+            key={item.id}
           />
         )}
         style={styles.infoCardContainer}

@@ -165,6 +165,7 @@ const CryptoList = () => {
             marketCap={item.market_cap}
             rank={item.market_cap_rank}
             imageUrl={item.image}
+            key={item.id}
           />
         )}
         onEndReached={() => {

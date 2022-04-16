@@ -63,6 +63,7 @@ const CategoryScreen = () => {
             title={item.name}
             marketCap={item.market_cap}
             percentChange={item.market_cap_change_24h}
+            key={item.id}
           />
         )}
         style={styles.infoCardContainer}
